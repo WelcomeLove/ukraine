@@ -1,13 +1,62 @@
 <!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript">
+      (function(){
+        // Выполняем код только на мобильных браузерах (на всякий случай)
+        if (typeof(window.orientation) !== 'undefined')
+        {
+          // Функция взята отсюда: https://makandracards.com/makandra/13743-detect-effective-horizontal-pixel-width-on-a-mobile-device-with-javascript
+          function getDeviceWidth()
+          {
+            var deviceWidth = window.orientation == 0 ? window.screen.width : window.screen.height;
+            // iOS returns available pixels, Android returns pixels / pixel ratio
+            // http://www.quirksmode.org/blog/archives/2012/07/more_about_devi.html
+            if (navigator.userAgent.indexOf('Android') >= 0 && window.devicePixelRatio)
+              deviceWidth = deviceWidth / window.devicePixelRatio;
+
+            return deviceWidth;
+          }
+
+          var deviceWidth = getDeviceWidth();
+          var maxWidth = 900;
+          
+          if (deviceWidth < maxWidth)
+          {
+            // Мои эксперименты на iPad 2 показали, что device-width всегда содержит значение ширины 
+            // экрана в книжной (portrait) ориентации (т.е. даже, если устройство находится в 
+            // альбомной (landscape) ориентации). Это же утверждалось в некоторых найденных мною статьях.
+            if (window.orientation == 0 || window.orientation == 180)
+              document.write('<meta name="viewport" content="width=device-width">');
+            else
+              document.write('<meta name="viewport" content="width=device-height">');
+          }
+          else
+            document.write('<meta name="viewport" content="width=' + maxWidth + '">');
+        }
+      })();
+    </script>
+    
+    <style type="text/css">
+      * { margin: 0; padding: 0; }
+      .content { min-width: 320px; max-width: 900px; background: #ffff99; }
+      .content div { border: 1px solid #f00; }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div>
+        abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+        abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+        abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+      </div>
+    </div>
+  </body>
+</html>
 <html  >
 <head>
   <!-- Site made with UKRAINE IN WAR, https://welcomelove.github.io/ukraine -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-  @media (min-width: 600px) {
-  .container {
-    max-width: 600px;
-  }
-}
   <meta charset="utf-8">
   <title>font-size</title>
   <style>
